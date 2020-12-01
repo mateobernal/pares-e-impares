@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const path = require('path');
 
 const app = express();
 
@@ -13,8 +14,14 @@ for(let i = 1; i <= 50; i++){
     }
 }
 
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main',
+    layoutsDir: path.join(app.get('views'), 'layouts'), 
+}));
+
+
 app.set('view engine', 'handlebars');
+app.set('etag', false);
 
 
 app.get('/', (req, res) =>{
